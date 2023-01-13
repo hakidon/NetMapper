@@ -14,7 +14,7 @@ from port_scan import *
 window = Tk()
 
 # Set the window title
-window.title("NetMapper 0.0.1")
+window.title("NetMapper 0.0.2")
 
 # Set the window size and make it un-resizable
 window.geometry("750x450")
@@ -22,14 +22,15 @@ window.resizable(False, False)
 # window.config(bg="cyan")
 
 back_state = 0
+ip_arr = []
 
-def back_func(ip=None):
+def back_func():
     match back_state:
         case 0:
             # main
             main_frame()
         case 1:
-            host_dis_load_frame(ip)
+            host_dis_frame()
         case 2:
             host_scan_frame()
         case _:
@@ -132,7 +133,7 @@ def all_scan_frame(ip):
     os_detect_btn.bind("<Enter>", lambda event, b=os_detect_btn: b.config(bg='#d8d8d8') if b['state'] == 'normal' else None)
     os_detect_btn.bind("<Leave>", lambda event, b=os_detect_btn: b.config(bg='#b1b1b1') if b['state'] == 'normal' else None)
 
-    back_btn = Button(window, text="Back", command=lambda: [remove_all_scan_frame(), back_func(ip) if back_state == 1 else back_func(), set_back_to_main()])
+    back_btn = Button(window, text="Back", command=lambda: [remove_all_scan_frame(), back_func() if back_state == 1 else back_func(), set_back_to_main()])
     back_btn.grid(row=0, column=3,pady=(360,20), padx=(20,0), sticky = "nw")
     back_btn.config(font=("Montserrat", 12, "bold"), width=25, height=2, fg='white', bg='#ff4c4c')
     back_btn.bind("<Enter>", lambda event, b=back_btn: b.config(bg='#ff7f7f'))
@@ -159,14 +160,16 @@ def host_dis_load_frame(ip):
         title_host_dis = Label(window, text="SCANNING FOR IP IN SUBNET " + '.'.join(ip.split('.')[:3]) + '.XXX', fg="green", font=("Montserrat", 20, "bold"))
         title_host_dis.place(relx=.5, rely=.4, anchor="center")
         title_host_dis_wait = Label(window, text="PLEASE WAIT ...", fg="black", font=("Montserrat", 18, "bold"))
-        title_host_dis_wait.place(relx=.5, rely=.5, anchor="center")        
-        ip_arr = host_dis(ip)
+        title_host_dis_wait.place(relx=.5, rely=.5, anchor="center") 
+        global ip_arr  
+        if (not ip_arr):   
+            ip_arr = host_dis(ip)
         remove_host_dis_load_frame()
-        host_dis_frame(ip_arr)            
+        host_dis_frame()            
     t = threading.Thread(target=get_data)
     t.start()
 
-def host_dis_frame(ip_arr):
+def host_dis_frame():
     def set_back_to_host_scan():
         global back_state
         back_state = 1
@@ -304,6 +307,8 @@ def host_scan_frame():
 
 def main_frame():
     ip = get_ip()
+    global ip_arr  
+    ip_arr = []
     # Create a big title label
     title = Label(window, text="NetMapper™", font=("Montserrat", 30, "bold"))
     title.grid(pady=(35,40), padx=(65,0))

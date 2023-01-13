@@ -2,8 +2,11 @@ import subprocess
 import re
 
 def os_detect(host):
-    result = subprocess.run(['ping', host,'-n','1'],stdout=subprocess.PIPE)
-    output = result.stdout.decode()
+     # Option for the number of packets as a function of
+    param = '-n'
+    # Building the command. Ex: "ping -c 1 google.com"
+    command = " ".join(['ping', param, '1', host]) 
+    output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
     match = re.search(r"TTL=(\d+)", output)
     if match:
         ttl = match.group(1)
@@ -18,4 +21,3 @@ def os_detect(host):
             return ("The OS type is likely Other")
     else:
         return ("Host is not accessible")
-

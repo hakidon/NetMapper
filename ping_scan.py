@@ -42,7 +42,7 @@ def ping(host):
         redirect = '> /dev/null 2>&1'
 
     # Building the command. Ex: "ping -c 1 google.com"
-    command = " ".join(['ping', param, '1', host])
+    command = " ".join(['ping', param, '1', host]) 
 
     try:
         output = subprocess.check_output(command, shell=True, stderr=subprocess.STDOUT, universal_newlines=True)
@@ -72,8 +72,8 @@ def host_dis(host_ip):
 
         for t in threads:
             t.join()
-    except KeyboardInterrupt:
-        print("Keyboard interrupt detected. Returning current state.")
+    except:
+        pass
 
     return host_range
 
@@ -82,17 +82,4 @@ def ip_scan(host_ip):
         return (True, f"{host_ip} is alive")
     else:
         return (False, f"{host_ip} is NOT alive")
-
-# def main(host):
-#     # ip_scan(host)
-#     print(f"Reachable hosts: {host_dis(host)}")
-
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser()
-#     parser.add_argument("host", help="The host to scan")
-#     args = parser.parse_args()
-
-# host = "10.213.6.224"
-# print(host_dis(host))
-# # ip_scan ("10.213.6.224")
 
