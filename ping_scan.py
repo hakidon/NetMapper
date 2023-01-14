@@ -17,9 +17,12 @@ def check_connection():
         if flag_found:
             if ":" in line:
                 section += line + "\n"
-                skip_once = True
-            if line.strip() == "" and not skip_once:
-                break
+            if line.strip():
+                if not skip_once:
+                    skip_once = True
+                    continue
+                else:
+                    break
 
     if "Media disconnected" not in section:
         return True
