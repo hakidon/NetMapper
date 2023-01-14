@@ -29,6 +29,9 @@ def version_scan(ip, port):
                 server_version = header.split(':')[1].strip()
                 break
     except:
+        pass
+
+    if (not server_version.strip()):
         server_version = ('(Not accessible)')
         
     return (server_version)

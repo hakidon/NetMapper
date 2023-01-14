@@ -71,3 +71,6 @@ def port_scan_with_version(host):
     while not result_queue.empty():
         str_open_ports_with_version += result_queue.get()
     return str_open_ports_with_version
+
+
+# print(port_scan_with_version("10.213.5.11"))
