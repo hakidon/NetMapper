@@ -346,7 +346,7 @@ def main_frame():
     button1.bind("<Leave>",  lambda e: on_button_leave(e, button1))
 
     # Create the second button
-    button2 = Button(window, text="HOST SCAN", command=on_button2_click)
+    button2 = Button(window, text="PING SCAN", command=on_button2_click)
     # Center the button horizontally
     button2.grid(pady=(0,30), padx=(40,0))
     button2.config(font=("Montserrat", 12, "bold"), width=60, height=3, bg='#b1b1b1')
