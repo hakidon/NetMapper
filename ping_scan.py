@@ -3,8 +3,11 @@ import socket
 import subprocess
 import threading
 
-def get_ip():
-   return str(socket.gethostbyname(socket.gethostname()))
+def get_ip(): 
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # connect() for UDP doesn't send packets
+    s.connect(('10.0.0.0', 0)) 
+    return (s.getsockname()[0])
 
 def check_connection():
     output = subprocess.check_output("ipconfig", shell=True).decode()

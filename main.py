@@ -14,7 +14,7 @@ from port_scan import *
 window = Tk()
 
 # Set the window title
-window.title("NetMapper 0.0.3")
+window.title("NetMapper 0.0.4")
 
 # Set the window size and make it un-resizable
 window.geometry("750x450")
